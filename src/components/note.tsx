@@ -1,14 +1,31 @@
 import styled from "styled-components";
 // import trashSvg from "./assets/trash.svg";
 import Icon from "../utils/Icons";
+import { TNote } from "../types";
+import { useDispatch } from "react-redux";
+import { noteRemove } from "../reducer/features/notesList";
+import useModal from "../hooks/useModal";
 
-function Note() {
+function Note({ note }: { note: TNote }) {
+  const dispatch = useDispatch();
+  const { toggleModal, setSelectedNote } = useModal();
+  const handleEditModal = () => {
+    setSelectedNote(note);
+    toggleModal();
+  };
+
+  const handleNoteDelete = () => {
+    dispatch(noteRemove(note.id));
+  };
+
+  const { title, description, lastModified, tags } = note;
+  const date = new Date(lastModified);
   return (
-    <NoteWrapper>
+    <NoteWrapper onClick={handleEditModal}>
       <div>
         <div className="note-header">
-          <span>Lorem Ipsum</span>
-          <button>
+          <span>{title}</span>
+          <button onClick={handleNoteDelete}>
             <Icon
               name="closeBtn"
               size={24}
@@ -16,14 +33,19 @@ function Note() {
             ></Icon>
           </button>
         </div>
-        <div className="note-content">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime
-            obcaecati quod eveniet nisi! Velit, quo.
-          </p>
+        <div className="note-desc">
+          {tags && tags.length > 1 && (
+            <div className="tags">
+              {tags.map((tag) => tag && <span className="tag">{tag}</span>)}
+            </div>
+          )}
+          <p>{description}</p>
         </div>
       </div>
-      <span className="last-modified">Last Modified: 20th Jan 2024</span>
+      <span className="last-modified">
+        Last Modified: {date.toDateString()} {date.getHours()}:
+        {date.getMinutes()}
+      </span>
     </NoteWrapper>
   );
 }
@@ -49,7 +71,7 @@ const NoteWrapper = styled.div`
     padding: 0.5rem 1rem;
     font-weight: 700;
   }
-  .note-content {
+  .note-desc {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -61,6 +83,18 @@ const NoteWrapper = styled.div`
     text-align: right;
     padding: 5px;
     opacity: 0.5;
+  }
+  .tags {
+    display: flex;
+    /* justify-content: space-evenly; */
+    flex-wrap: wrap;
+  }
+  .tag {
+    padding: 0 1rem;
+    border-radius: var(--border-lg);
+    border: 1px solid var(--text-alt);
+    color: var(--text-alt);
+    margin: 0.5rem 0.5rem 0 0;
   }
   button {
     background: none;

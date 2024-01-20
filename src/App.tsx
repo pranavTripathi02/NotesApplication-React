@@ -3,16 +3,21 @@ import Navbar from "./components/navbar";
 import NewNoteBtn from "./components/newNoteBtn";
 import NewNoteBtnSticky from "./components/newNoteBtnSticky";
 import Notes from "./components/notes";
+import Modal from "./components/Modals/Modal";
+import { ModalContextProvider } from "./context/modalContext";
 
 function App() {
   return (
     <>
-      <Navbar />
-      <main className="content">
-        <NewNoteBtn />
-        <Notes />
-        <NewNoteBtnSticky />
-      </main>
+      <ModalContextProvider>
+        <Modal />
+        <Navbar />
+        <main className="content">
+          <NewNoteBtn />
+          <Notes />
+          <NewNoteBtnSticky />
+        </main>
+      </ModalContextProvider>
     </>
   );
 }

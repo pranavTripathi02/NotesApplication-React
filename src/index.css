@@ -6,7 +6,8 @@
   --bg: #111111;
   --bg-alt: #1e1e1e;
   --text: #dddddd;
-  --text-alt: hsla(0%, 0%, 87%, 0.5);
+  /* --text-alt: hsla(0%, 0%, 87%, .50); */
+  --text-alt: rgba(221, 221, 221, 0.5);
   --border-sm: 5px;
   --border-md: 10px;
   --border-lg: 20px;
