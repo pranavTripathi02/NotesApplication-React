@@ -9,7 +9,6 @@ const notesListSlice = createSlice({
   reducers: {
     noteAdd: (state, action) => {
       const { note } = action.payload;
-      console.log(action.payload);
       return [...state, note];
     },
     noteEdit: (state, action: { payload: { newNote: TNote } }) => {

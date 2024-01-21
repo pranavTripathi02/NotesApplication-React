@@ -11,6 +11,6 @@ listenerMiddleware.startListening({
   effect: (_action, listenerApi) =>
     localStorage.setItem(
       "reduxState",
-      JSON.stringify((listenerApi.getState() as RootState).notes),
+      JSON.stringify(listenerApi.getState() as RootState),
     ),
 });

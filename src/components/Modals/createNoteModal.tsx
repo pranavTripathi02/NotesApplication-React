@@ -66,7 +66,7 @@ function CreateNoteModal({ toggleModal }: { toggleModal: () => void }) {
     <>
       <Wrapper>
         <div className="header">
-          <h5>New Note</h5>
+          <h5>{note ? "Edit Note" : "New Note"}</h5>
           <button onClick={toggleModal}>
             <Icon
               name="closeBtn"

@@ -21,17 +21,26 @@ function Note({ note }: { note: TNote }) {
   const { title, description, lastModified, tags } = note;
   const date = new Date(lastModified);
   return (
-    <NoteWrapper onClick={handleEditModal}>
+    <NoteWrapper>
       <div>
         <div className="note-header">
           <span>{title}</span>
-          <button onClick={handleNoteDelete}>
-            <Icon
-              name="closeBtn"
-              size={24}
-              color="#d22"
-            ></Icon>
-          </button>
+          <div className="note-actions">
+            <button onClick={handleEditModal}>
+              <Icon
+                name="pencil"
+                size={20}
+                color="#262"
+              />
+            </button>
+            <button onClick={handleNoteDelete}>
+              <Icon
+                name="closeBtn"
+                size={24}
+                color="#d22"
+              ></Icon>
+            </button>
+          </div>
         </div>
         <div className="note-desc">
           {tags && tags.length > 1 && (
@@ -96,11 +105,15 @@ const NoteWrapper = styled.div`
     color: var(--text-alt);
     margin: 0.5rem 0.5rem 0 0;
   }
+  .note-actions {
+    display: flex;
+  }
   button {
     background: none;
     cursor: pointer;
     border: none;
     padding: 0px;
+    margin: 0 0 0 5px;
     /* border-radius: var(--border-full); */
   }
 `;

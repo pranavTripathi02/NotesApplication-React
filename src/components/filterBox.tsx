@@ -1,19 +1,49 @@
 import styled from "styled-components";
 import Icon from "../utils/Icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { changedFilters } from "../reducer/features/filters";
+import { TFilter } from "../types";
 
 function FilterBox() {
   const [asc, setAsc] = useState(true);
-  const [filter, setFilter] = useState("Title");
+  const [filter, setFilter] = useState<"title" | "createdOn" | "lastModified">(
+    "title",
+  );
   const dispatch = useDispatch();
-  const handleFilterChange = (e) => {
-    const newFilter = e.target.value;
-    const payload = { filters: newFilter };
-    dispatch(changedFilters(payload));
-    setFilter(newFilter);
+
+  const handleSort = () => {
+    updateFilterState({ sorting: !asc });
+    setAsc((prev) => !prev);
   };
+
+  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newFilter = e.target.value;
+    if (
+      newFilter === "title" ||
+      newFilter === "createdOn" ||
+      newFilter === "lastModified"
+    ) {
+      setFilter(newFilter);
+      updateFilterState({ filterType: newFilter });
+    }
+  };
+
+  const updateFilterState = ({
+    filterType,
+    sorting,
+  }: {
+    filterType?: "title" | "createdOn" | "lastModified";
+    sorting?: boolean;
+  }) => {
+    const payload: TFilter = { filter: "title", sortAsc: true };
+    if (filterType) payload.filter = filterType;
+    if (sorting) payload.sortAsc = sorting;
+    dispatch(changedFilters(payload));
+  };
+  // useEffect(() => {
+  //   updateFilterState();
+  // }, [asc, filter]);
 
   return (
     <FilterWrapper>
@@ -26,13 +56,13 @@ function FilterBox() {
           onChange={(e) => handleFilterChange(e)}
         >
           <option value="title">Title</option>
-          <option value="date">Date Created</option>
-          <option value="modified">Last Modified</option>
+          <option value="createdOn">Date Created</option>
+          <option value="lastModified">Last Modified</option>
         </select>
       </label>
       <button
         className="sort-order"
-        onClick={() => setAsc((prev) => !prev)}
+        onClick={handleSort}
       >
         {asc ? (
           <Icon

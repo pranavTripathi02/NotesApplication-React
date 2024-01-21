@@ -7,3 +7,8 @@ export type TNote = {
   createdOn: number;
   lastModified: number;
 };
+
+export type TFilter = {
+  filter: "title" | "createdOn" | "lastModified";
+  sortAsc: boolean;
+};

@@ -4,12 +4,10 @@ import notesList from "./features/notesList";
 import { listenerMiddleware } from "./middleware";
 
 const localState = JSON.parse(localStorage.getItem("reduxState") || "null");
-console.log(localStorage.getItem("reduxState"), localState);
 
 const store = configureStore({
   preloadedState: {
-    notes: localState === null ? [] : localState,
-    filters: "title",
+    notes: localState === null ? [] : localState?.notes,
   },
   reducer: {
     notes: notesList,
