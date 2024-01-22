@@ -1,15 +1,13 @@
 import styled from "styled-components";
 import Icon from "../utils/Icons";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { changedFilters } from "../reducer/features/filters";
-import { TFilter } from "../types";
+import { TFilterType } from "../types";
 
 function FilterBox() {
   const [asc, setAsc] = useState(true);
-  const [filter, setFilter] = useState<"title" | "createdOn" | "lastModified">(
-    "title",
-  );
+  const [filter, setFilter] = useState<TFilterType>("title");
   const dispatch = useDispatch();
 
   const handleSort = () => {
@@ -24,8 +22,8 @@ function FilterBox() {
       newFilter === "createdOn" ||
       newFilter === "lastModified"
     ) {
-      setFilter(newFilter);
       updateFilterState({ filterType: newFilter });
+      setFilter(newFilter);
     }
   };
 
@@ -33,12 +31,13 @@ function FilterBox() {
     filterType,
     sorting,
   }: {
-    filterType?: "title" | "createdOn" | "lastModified";
+    filterType?: TFilterType;
     sorting?: boolean;
   }) => {
-    const payload: TFilter = { filter: "title", sortAsc: true };
-    if (filterType) payload.filter = filterType;
-    if (sorting) payload.sortAsc = sorting;
+    const payload = {
+      filterType,
+      sorting,
+    };
     dispatch(changedFilters(payload));
   };
   // useEffect(() => {

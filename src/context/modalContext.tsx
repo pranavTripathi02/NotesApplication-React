@@ -1,12 +1,12 @@
 import { SetStateAction, createContext, useState } from "react";
 import { TNote } from "../types";
 
-type TModalEnum = "create" | "view";
+export type TModalEnum = "create" | "view";
 
 type TModal = {
   isModalOpen: boolean;
   modal: TModalEnum;
-  changeModal: ({ str }: { str: TModalEnum }) => void;
+  changeModal: (str: TModalEnum) => void;
   toggleModal: () => void;
   selectedNote: TNote | null;
   setSelectedNote: React.Dispatch<SetStateAction<TNote | null>>;
@@ -17,7 +17,7 @@ const ModalContext = createContext<TModal | null>(null);
 const ModalContextProvider = ({ children }: { children?: React.ReactNode }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modal, setModal] = useState<TModalEnum>("create");
-  const changeModal = ({ str }: { str: TModalEnum }) => {
+  const changeModal = (str: TModalEnum) => {
     setModal(str);
   };
   const toggleModal = () => {

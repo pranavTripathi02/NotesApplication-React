@@ -26,7 +26,7 @@ function CreateNoteModal({ toggleModal }: { toggleModal: () => void }) {
         tags: note.tags?.join(",") || "",
       });
     }
-  }, []);
+  }, []); //eslint-disable-line
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

@@ -5,12 +5,21 @@ import { TNote } from "../types";
 import { useDispatch } from "react-redux";
 import { noteRemove } from "../reducer/features/notesList";
 import useModal from "../hooks/useModal";
+import { TModalEnum } from "../context/modalContext";
 
 function Note({ note }: { note: TNote }) {
   const dispatch = useDispatch();
-  const { toggleModal, setSelectedNote } = useModal();
-  const handleEditModal = () => {
+  const { toggleModal, setSelectedNote, changeModal } = useModal();
+  const handleOpenNote = () => {
+    const modalType: TModalEnum = "view";
     setSelectedNote(note);
+    changeModal(modalType);
+    toggleModal();
+  };
+  const handleEditModal = () => {
+    const modalType: TModalEnum = "create";
+    setSelectedNote(note);
+    changeModal(modalType);
     toggleModal();
   };
 
@@ -18,34 +27,51 @@ function Note({ note }: { note: TNote }) {
     dispatch(noteRemove(note.id));
   };
 
-  const { title, description, lastModified, tags } = note;
+  const { id, title, description, lastModified, tags } = note;
   const date = new Date(lastModified);
   return (
     <NoteWrapper>
       <div>
         <div className="note-header">
-          <span>{title}</span>
+          <span
+            className="note-title"
+            onClick={handleOpenNote}
+          >
+            {title}
+          </span>
           <div className="note-actions">
             <button onClick={handleEditModal}>
               <Icon
                 name="pencil"
                 size={20}
-                color="#262"
               />
             </button>
             <button onClick={handleNoteDelete}>
               <Icon
                 name="closeBtn"
                 size={24}
-                color="#d22"
               ></Icon>
             </button>
           </div>
         </div>
-        <div className="note-desc">
-          {tags && tags.length > 1 && (
+        <div
+          className="note-desc"
+          onClick={handleOpenNote}
+        >
+          {tags && tags.length > 0 && (
             <div className="tags">
-              {tags.map((tag) => tag && <span className="tag">{tag}</span>)}
+              Tags:
+              {tags.map(
+                (tag) =>
+                  tag && (
+                    <span
+                      key={id}
+                      className="tag"
+                    >
+                      {tag}
+                    </span>
+                  ),
+              )}
             </div>
           )}
           <p>{description}</p>
@@ -65,8 +91,9 @@ const NoteWrapper = styled.div`
   height: 250px;
   justify-content: space-between;
   width: 300px;
-  background: var(--bg-alt);
-  border-radius: var(--border-md);
+  /* background: var(--bg-alt); */
+  border: 1px solid var(--text-alt);
+  border-radius: var(--border-sm);
   margin: 1rem;
   &:hover {
     cursor: default;
@@ -76,7 +103,8 @@ const NoteWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid var(--bg);
+    /* border-bottom: 2px solid var(--bg); */
+    border-bottom: 1px solid var(--text-alt);
     padding: 0.5rem 1rem;
     font-weight: 700;
   }
@@ -95,15 +123,21 @@ const NoteWrapper = styled.div`
   }
   .tags {
     display: flex;
-    /* justify-content: space-evenly; */
     flex-wrap: wrap;
+    align-items: center;
+    overflow: clip;
+    padding: 0.25rem 0;
+  }
+  .note-title {
+    width: 70%;
+    overflow: hidden;
   }
   .tag {
     padding: 0 1rem;
     border-radius: var(--border-lg);
     border: 1px solid var(--text-alt);
     color: var(--text-alt);
-    margin: 0.5rem 0.5rem 0 0;
+    margin: 0 0.25rem;
   }
   .note-actions {
     display: flex;
@@ -115,6 +149,9 @@ const NoteWrapper = styled.div`
     padding: 0px;
     margin: 0 0 0 5px;
     /* border-radius: var(--border-full); */
+  }
+  svg {
+    color: #adb5bd;
   }
 `;
 

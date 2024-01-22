@@ -3,22 +3,16 @@ import Note from "./note";
 import { useSelector } from "react-redux";
 import { RootState } from "../reducer/store";
 import { useEffect, useState } from "react";
-import { TFilter, TNote } from "../types";
+import { TNote } from "../types";
 import FilterBox from "./filterBox";
 
 function Notes() {
   const notesList = useSelector((state: RootState) => state.notes);
   const filters = useSelector((state: RootState) => state.filters);
 
-  // const [filteredNotes, setFilteredNotes] = useState<TNote[]>([]);
-
-  console.log(notesList, filters);
-  const newNotesList = notesList;
-  // console.log(newNotesList);
+  const [filteredNotes, setFilteredNotes] = useState<TNote[]>(notesList);
 
   const filterNotes = () => {
-    // console.log("filtering");
-    // console.log(newNotesList);
     const compareStrings = (a: string, b: string) => {
       const A = a.toUpperCase();
       const B = b.toUpperCase();
@@ -26,52 +20,39 @@ function Notes() {
       if (A > B) return 1;
       return 0;
     };
-    // switch (filters.filter) {
-    // case "title":
-    //   if (filters.sortAsc) setFilteredNotes(newNotesList.sort());
-    //   else
-    //     setFilteredNotes(
-    //       newNotesList.sort((a, b) => compareStrings(b.title, a.title)),
-    //     );
-    //   break;
-    // case "createdOn":
-    //   if (filters.sortAsc)
-    //     setFilteredNotes(
-    //       newNotesList.sort((a, b) => a.createdOn - b.createdOn),
-    //     );
-    //   else
-    //     setFilteredNotes(
-    //       newNotesList.sort((a, b) => b.createdOn - a.createdOn),
-    //     );
-    //   break;
-    // case "lastModified":
-    //   if (filters.sortAsc)
-    //     setFilteredNotes(
-    //       newNotesList.sort((a, b) => a.lastModified - b.lastModified),
-    //     );
-    //   else
-    //     setFilteredNotes(
-    //       newNotesList.sort((a, b) => b.lastModified - a.lastModified),
-    //     );
-    //   break;
     switch (filters.filter) {
       case "title":
         if (filters.sortAsc)
-          newNotesList.sort((a, b) => compareStrings(a.title, b.title));
-        else newNotesList.sort((a, b) => compareStrings(b.title, a.title));
+          setFilteredNotes(
+            notesList.toSorted((a, b) => compareStrings(a.title, b.title)),
+          );
+        else
+          setFilteredNotes(
+            notesList.toSorted((a, b) => compareStrings(b.title, a.title)),
+          );
         break;
       case "createdOn":
         if (filters.sortAsc)
-          newNotesList.sort((a, b) => a.createdOn - b.createdOn);
-        else newNotesList.sort((a, b) => b.createdOn - a.createdOn);
+          setFilteredNotes(
+            notesList.toSorted((a, b) => a.createdOn - b.createdOn),
+          );
+        else
+          setFilteredNotes(
+            notesList.toSorted((a, b) => b.createdOn - a.createdOn),
+          );
         break;
       case "lastModified":
         if (filters.sortAsc)
-          newNotesList.sort((a, b) => a.lastModified - b.lastModified);
-        else newNotesList.sort((a, b) => b.lastModified - a.lastModified);
+          setFilteredNotes(
+            notesList.toSorted((a, b) => a.lastModified - b.lastModified),
+          );
+        else
+          setFilteredNotes(
+            notesList.toSorted((a, b) => b.lastModified - a.lastModified),
+          );
         break;
       default:
-        newNotesList;
+        break;
     }
   };
 
@@ -79,7 +60,7 @@ function Notes() {
     filterNotes();
   }, [notesList, filters.sortAsc, filters.filter]); //eslint-disable-line
 
-  if (!newNotesList?.length) return null;
+  if (!filteredNotes?.length) return null;
 
   return (
     <NotesWrapper>
@@ -87,7 +68,7 @@ function Notes() {
         <FilterBox />
       </div>
       <div className="notes-grid">
-        {newNotesList.map(
+        {filteredNotes.map(
           (note: TNote) =>
             note && (
               <div key={note.id}>

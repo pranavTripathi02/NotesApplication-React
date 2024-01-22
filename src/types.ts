@@ -8,7 +8,10 @@ export type TNote = {
   lastModified: number;
 };
 
+export type TFilterType = "title" | "createdOn" | "lastModified";
+
 export type TFilter = {
-  filter: "title" | "createdOn" | "lastModified";
+  filter: TFilterType;
   sortAsc: boolean;
+  searchTerm?: string;
 };
