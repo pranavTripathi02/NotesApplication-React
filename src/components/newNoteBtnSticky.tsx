@@ -1,8 +1,10 @@
 import styled, { css } from "styled-components";
 import Icon from "../utils/Icons";
 import { useEffect, useState } from "react";
+import useModal from "../hooks/useModal";
 
 function NewNoteBtnSticky() {
+  const { toggleModal, setSelectedNote } = useModal();
   const [yScroll, setYScroll] = useState(0);
   useEffect(() => {
     const handleScroll = () => {
@@ -16,7 +18,8 @@ function NewNoteBtnSticky() {
   return (
     <NewNoteBtnStickyWrapper
       onClick={() => {
-        console.log("clicked");
+        setSelectedNote(null);
+        toggleModal();
       }}
       $scrolled={yScroll}
     >
