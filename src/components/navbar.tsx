@@ -13,15 +13,15 @@ function Navbar() {
         />
       </div>
       <div className="auth"></div>
-      <div className="no-auth">
-        <Button
-          className="sign-up"
-          $primary
-        >
-          Sign Up
-        </Button>
-        <Button className="log-in">Log In</Button>
-      </div>
+      {/* <div className="no-auth"> */}
+      {/*   <Button */}
+      {/*     className="sign-up" */}
+      {/*     $primary */}
+      {/*   > */}
+      {/*     Sign Up */}
+      {/*   </Button> */}
+      {/*   <Button className="log-in">Log In</Button> */}
+      {/* </div> */}
     </Nav>
   );
 }
@@ -36,6 +36,10 @@ const Nav = styled.nav<{ $primary?: boolean }>`
   align-items: center;
   @media (max-width: 1200px) {
     padding: 0 1rem;
+  }
+
+  input {
+    background: var(--text);
   }
 
   .logo > a {

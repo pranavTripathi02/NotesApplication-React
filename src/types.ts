@@ -1,5 +1,12 @@
-export type TNote = {
+export type TAuth = {
   id: string;
+  name: string;
+  email: string;
+  accessToken: string;
+};
+
+export type TNote = {
+  id: number;
   title: string;
   description: string;
   content: string;

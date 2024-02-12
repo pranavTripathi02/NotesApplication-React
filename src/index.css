@@ -5,9 +5,9 @@
 
   --bg: #111111;
   --bg-alt: #1e1e1e;
-  --text: #dddddd;
-  /* --text-alt: hsla(0%, 0%, 87%, .50); */
+  --text: #ddd;
   --text-alt: rgba(221, 221, 221, 0.5);
+  --highlight: #ddd;
   --border-sm: 5px;
   --border-md: 10px;
   --border-lg: 20px;
@@ -15,7 +15,7 @@
   /* --box-shadow: 4px 4px 4px hsla(0%, 0%, 50%, 0.25); */
   --box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.75);
 
-  background: #121212;
+  background: #000;
   color: var(--text);
 
   font-synthesis: none;

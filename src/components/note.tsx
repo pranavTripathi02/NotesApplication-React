@@ -95,9 +95,17 @@ const NoteWrapper = styled.div`
   border: 1px solid var(--text-alt);
   border-radius: var(--border-sm);
   margin: 1rem;
-  &:hover {
-    cursor: default;
-    box-shadow: var(--box-shadow);
+  background: radial-gradient(
+    circle 100rem at 50% -60%,
+    rgba(0, 0, 0, 0) 0%,
+    #000 15%
+  );
+  transition: all 0.5s ease-out;
+  cursor: default;
+  &:hover,
+  &:focus {
+    background-color: #fff;
+    box-shadow: 0px 2px 4px -2px #ddd;
   }
   .note-header {
     display: flex;

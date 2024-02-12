@@ -1,14 +1,17 @@
 import styled from "styled-components";
 import Note from "./note";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../reducer/store";
 import { useEffect, useState } from "react";
 import { TNote } from "../types";
 import FilterBox from "./filterBox";
+import { fetchNotes } from "../reducer/features/notesList";
 
 function Notes() {
   const notesList = useSelector((state: RootState) => state.notes);
   const filters = useSelector((state: RootState) => state.filters);
+
+  console.log(notesList);
 
   const [filteredNotes, setFilteredNotes] = useState<TNote[]>(notesList);
 

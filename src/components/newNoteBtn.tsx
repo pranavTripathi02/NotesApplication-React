@@ -3,14 +3,14 @@ import Icon from "../utils/Icons";
 import useModal from "../hooks/useModal";
 
 function NewNoteBtn() {
-  const { toggleModal, setSelectedNote } = useModal();
+  const { toggleModal, setSelectedNote, changeModal } = useModal();
+  const handleNewNote = () => {
+    setSelectedNote(null);
+    toggleModal();
+    changeModal("create");
+  };
   return (
-    <ButtonWrapper
-      onClick={() => {
-        setSelectedNote(null);
-        toggleModal();
-      }}
-    >
+    <ButtonWrapper onClick={handleNewNote}>
       <Icon
         name="pencil"
         size={20}

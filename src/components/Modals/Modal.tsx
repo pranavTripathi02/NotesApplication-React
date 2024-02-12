@@ -28,18 +28,23 @@ function Modal() {
 
 const ModalWrapper = styled.div`
   position: relative;
+  button {
+    color: var(--text);
+  }
 `;
 const ModalEl = styled.div`
   position: fixed;
   z-index: 10;
   width: max-content;
   height: max-content;
-  background: var(--text);
+  background: var(--bg);
   opacity: 1;
-  color: var(--bg);
+  color: var(--text);
   margin: auto;
   inset: 0;
+  box-shadow: 0px 0px 8px -2px var(--text);
   border-radius: var(--border-md);
+  padding: 0.5rem 1rem;
 `;
 
 const ModalBackground = styled.div`
